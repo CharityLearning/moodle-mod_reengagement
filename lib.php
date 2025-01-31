@@ -304,9 +304,9 @@ function reengagement_email_user($reengagement, $inprogress) {
         $emailresult = $emailresult && $usersendresult;
     }
 
-    if (!empty($reengagement->thirdpartyemails)) {
+    if (!empty($templateddetails['thirdpartyemails'])) {
         // Process third-party emails.
-        $emails = array_map('trim', explode(',', $reengagement->thirdpartyemails));
+        $emails = array_map('trim', explode(',', $templateddetails['thirdpartyemails']));
         foreach ($emails as $emailaddress) {
             if (!validate_email($emailaddress)) {
                 debugging('', DEBUG_ALL) && mtrace("invalid third-party email: $emailaddress - skipping send");
@@ -438,7 +438,7 @@ function reengagement_template_variables($reengagement, $inprogress, $user) {
 
     // Array to describe which fields in reengagement object should have a template replacement.
     $replacementfields = array('emailsubject', 'emailcontent', 'emailsubjectmanager', 'emailcontentmanager',
-                               'emailsubjectthirdparty', 'emailcontentthirdparty');
+                               'emailsubjectthirdparty', 'emailcontentthirdparty', 'thirdpartyemails');
 
     $results = array();
     // Replace %variable% with relevant value everywhere it occurs in reengagement->field.
